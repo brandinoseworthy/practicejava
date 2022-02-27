@@ -9,30 +9,51 @@ public class Main {
 
        final int monthsInYear = 12;
        final int percent = 100;
+       int principal = 0;
+       double monthlyInterest = 0;
+       int numberOfPayments = 0;
 
         // get Principal
 
+
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Principal: ");
-        int principal = scanner.nextInt();
+
+        while(true) {
+            System.out.print("Principal: ");
+            principal = scanner.nextInt();
+            if (principal >= 1000 && principal <= 1_000_000)
+                break;
+            System.out.println("Enter a value between $1K and $1M");
+        }
 
         // get APR and monthly interest
 
-        System.out.print("Annual Percentage Rate (APR): ");
-        double apr = scanner.nextDouble();
-        double monthlyInterest1 = apr / percent / monthsInYear;
+        while(true) {
+            System.out.print("Annual Percentage Rate (APR): ");
+            double annualInterest = scanner.nextDouble();
+            monthlyInterest = annualInterest / percent / monthsInYear;
+            if (annualInterest > 0 && annualInterest <= 30)
+                break;
+            System.out.println("Enter a rate between 0 and 30.");
 
+
+        }
         // get period
 
-        System.out.print("Period in Years: ");
-        int periodInYears = scanner.nextInt();
-        int numberOfPayments = periodInYears * monthsInYear;
+        while(true) {
+            System.out.print("Period in Years: ");
+            int periodInYears = scanner.nextInt();
+            numberOfPayments = periodInYears * monthsInYear;
+            if (periodInYears >= 0 && periodInYears <= 30)
+                break;
+            System.out.println("Enter a year period between 1 and 30 years.");
+        }
 
       // get calculation to get Mortgage Payments (Monthly)
 
         double mortgage = principal
-                        * (monthlyInterest1 * Math.pow(1 + monthlyInterest1, numberOfPayments))
-                        / (Math.pow(1 + monthlyInterest1, numberOfPayments)-1);
+                        * (monthlyInterest * Math.pow(1 + monthlyInterest, numberOfPayments))
+                        / (Math.pow(1 + monthlyInterest, numberOfPayments)-1);
 
 
        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
